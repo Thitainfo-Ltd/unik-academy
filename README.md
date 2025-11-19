@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UNIK Academy - Next.js Application
+
+A modern, responsive web application for UNIK Academy built with Next.js 15, TypeScript, Tailwind CSS, and MongoDB.
+
+## Features
+
+- 🎨 Modern, responsive design with custom color scheme
+- 📱 Mobile-friendly navigation
+- 🏠 Home page with course pricing and core courses
+- 📖 About Us page
+- 💼 Careers/Hiring page with application form
+- 📧 Contact page with contact form
+- 📄 Terms and Conditions page
+- 🔐 Admin panel for managing contacts and applications
+- 🗄️ MongoDB integration for data storage
+- ⚡ Built with Next.js 15 App Router
+
+## Tech Stack
+
+- **Framework:** Next.js 15
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** MongoDB with Mongoose
+- **Authentication:** Custom admin authentication
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+ installed
+- MongoDB instance (local or MongoDB Atlas)
+
+### Installation
+
+1. Clone the repository or navigate to the project directory:
+
+   ```bash
+   cd unik-academy
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables:
+
+   - Copy `.env.local.example` to `.env.local`
+   - Update `MONGODB_URI` with your MongoDB connection string
+   - Update `ADMIN_SECRET_KEY` with a secure secret key
+
+   ```bash
+   cp .env.local.example .env.local
+   ```
+
+4. Create an admin user:
+
+   ```bash
+   # Make a POST request to /api/admin/create-admin
+   # Or use a tool like Postman/curl:
+   curl -X POST http://localhost:3000/api/admin/create-admin \
+     -H "Content-Type: application/json" \
+     -d '{"username":"admin","password":"yourpassword","secretKey":"unik-admin-secret-2025"}'
+   ```
+
+5. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Project Structure
+
+```
+unik-academy/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── admin/          # Admin panel pages
+│   │   ├── api/            # API routes
+│   │   ├── about/          # About Us page
+│   │   ├── careers/        # Careers/Hiring page
+│   │   ├── contact/        # Contact page
+│   │   ├── terms/          # Terms and Conditions page
+│   │   ├── layout.tsx      # Root layout
+│   │   ├── page.tsx        # Home page
+│   │   └── not-found.tsx   # 404 error page
+│   ├── components/         # React components
+│   │   ├── Navigation.tsx
+│   │   └── Footer.tsx
+│   ├── lib/               # Utility functions
+│   │   └── mongodb.ts     # MongoDB connection
+│   └── models/            # Mongoose models
+│       ├── Contact.ts
+│       ├── Application.ts
+│       └── Admin.ts
+├── .env.local             # Environment variables
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Color Scheme
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Primary Dark:** `#0e2b49`
+- **Primary Medium:** `#133a67`
+- **Accent Gold:** `#c0a84f`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Pages
 
-## Learn More
+- **Home (`/`):** Main landing page with course pricing and core courses
+- **About Us (`/about`):** Information about UNIK Academy
+- **Careers (`/careers`):** Job openings and application form
+- **Contact (`/contact`):** Contact form and contact information
+- **Terms (`/terms`):** Terms and conditions
+- **Admin Login (`/admin/login`):** Admin authentication
+- **Admin Dashboard (`/admin/dashboard`):** Admin panel for managing data
 
-To learn more about Next.js, take a look at the following resources:
+## API Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `POST /api/contact` - Submit contact form
+- `POST /api/application` - Submit job application
+- `POST /api/auth/login` - Admin login
+- `GET /api/admin/contacts` - Get all contact messages (admin only)
+- `GET /api/admin/applications` - Get all job applications (admin only)
+- `POST /api/admin/create-admin` - Create admin user (requires secret key)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Database Models
 
-## Deploy on Vercel
+- **Contact:** Stores contact form submissions
+- **Application:** Stores job application submissions
+- **Admin:** Stores admin user credentials
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Set up a MongoDB database (MongoDB Atlas recommended)
+2. Update `MONGODB_URI` in your deployment environment
+3. Deploy to Vercel, Netlify, or your preferred hosting platform
+4. Create an admin user using the create-admin endpoint
+
+## Contact Information
+
+- **Email:** unikacademy2025@gmail.com
+- **Phone:** 9217196824
+
+## License
+
+Private - UNIK Academy
