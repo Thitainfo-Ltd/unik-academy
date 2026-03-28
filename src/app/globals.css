@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #F8FAFC;
   --foreground: #0e2b49;
-  --primary: #133a67;
-  --accent: #c0a84f;
-  --primary-dark: #0e2b49;
+  --primary: #0e2b49;
   --primary-medium: #133a67;
-  --accent-gold: #c0a84f;
+  --accent: #c0a84f;
+  --accent-light: #d4bc72;
+  --surface: #ffffff;
+  --muted: #64748B;
+  --border: #E2E8F0;
 }
 
 @theme inline {
@@ -15,14 +18,31 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'Inter', Arial, Helvetica, sans-serif;
+  --font-heading: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 @layer utilities {
@@ -35,6 +55,9 @@ body {
   .text-accent {
     color: #c0a84f;
   }
+  .text-muted {
+    color: #64748B;
+  }
   .bg-primary {
     background-color: #0e2b49;
   }
@@ -46,5 +69,93 @@ body {
   }
   .border-accent {
     border-color: #c0a84f;
+  }
+  .font-heading {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  }
+
+  /* Gold shimmer animation for accent elements */
+  .gold-shimmer {
+    background: linear-gradient(135deg, #c0a84f 0%, #d4bc72 50%, #c0a84f 100%);
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Fade-in animation */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Subtle float animation for decorative elements */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Card hover lift */
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(14, 43, 73, 0.12);
+  }
+
+  /* Glass effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #c0a84f, #d4bc72);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Section divider */
+  .section-divider {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #c0a84f, #d4bc72);
+    border-radius: 2px;
+    margin: 0 auto 1.5rem;
+  }
+
+  /* Focus ring */
+  .focus-ring:focus-visible {
+    outline: 3px solid #c0a84f;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-float,
+    .gold-shimmer {
+      animation: none;
+    }
+    .card-hover:hover {
+      transform: none;
+    }
   }
 }

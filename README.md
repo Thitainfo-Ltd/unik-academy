@@ -45,7 +45,6 @@ A modern, responsive web application for UNIK Academy built with Next.js 15, Typ
    ```
 
 3. Set up environment variables:
-
    - Copy `.env.local.example` to `.env.local`
    - Update `MONGODB_URI` with your MongoDB connection string
    - Update `ADMIN_SECRET_KEY` with a secure secret key
@@ -146,3 +145,71 @@ unik-academy/
 ## License
 
 Private - UNIK Academy
+
+create a prompt as want to appoyu same in another proejct so I will easy to use
+
+⏺ Here's a reusable prompt you can copy-paste into any new project:
+
+---
+
+Build a contact form API route in Next.js 14 App Router with the following setup:
+
+## Stack
+
+- Next.js 14 App Router (route.js, not TypeScript)
+- Nodemailer with Gmail SMTP
+- MongoDB for persisting submissions
+- Zod for validation
+
+## File: app/api/[[...path]]/route.js
+
+### MongoDB
+
+- Module-level singleton connection (client + db vars)
+- connectDB() checks if db already exists before reconnecting
+- DB name from env: DB_NAME (default: "myapp")
+- Connection string from env: MONGO_URL
+
+### Email (Nodemailer)
+
+- Gmail SMTP via nodemailer.createTransport({ service: "gmail" })
+- Credentials from env: GMAIL_USER, GMAIL_APP_PASSWORD (app password, not account password)
+- Create transporter per request inside the handler function
+- Send 2 emails in parallel using Promise.all:
+  1. Admin notification → ADMIN_EMAIL env var
+  2. Auto-reply → user's submitted email
+- Wrap sendMail in try/catch — email failures should NOT fail the API response
+
+### POST /api/contact
+
+Validate body with Zod: - name: string, min 2 chars - email: valid email - phone: string, min 10 chars - company: optional string - message: string, min 10 chars
+
+On success:
+
+1. Generate unique ID: `contact_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+2. Save to MongoDB collection "contact_submissions" with { id, ...fields, createdAt, status: "new" }
+3. Send admin email (HTML table with all fields + submission ID)
+4. Send auto-reply to user (branded HTML with reference ID + website link)
+5. Return { success: true, message: "...", submissionId }
+
+On Zod error: return 400 with error.errors array
+On other error: return 500
+
+### Other routes
+
+- GET /api/ → API info JSON
+- GET /api/health → MongoDB ping, returns { status, database, timestamp }
+- PUT, DELETE, PATCH → 405 Method Not Allowed
+
+### Env vars required
+
+MONGO_URL
+DB_NAME
+GMAIL_USER
+GMAIL_APP_PASSWORD
+ADMIN_EMAIL
+NEXT_PUBLIC_BASE_URL ← used in auto-reply email as website link
+
+---
+
+Save this somewhere handy — paste it as the first message when starting a new project and it will reproduce the exact same setup.
